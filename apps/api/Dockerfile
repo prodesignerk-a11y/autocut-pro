@@ -33,7 +33,7 @@ COPY packages/shared/package.json ./packages/shared/
 COPY packages/database/package.json ./packages/database/
 COPY packages/database/prisma ./packages/database/prisma
 
-RUN pnpm install --no-frozen-lockfile --prod
+RUN pnpm install --no-frozen-lockfile
 RUN pnpm --filter @autocut/database db:generate
 
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
