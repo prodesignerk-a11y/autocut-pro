@@ -4,7 +4,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs --dts --out-dir dist --external @prisma/client",
+    "build": "tsup src/index.ts --format cjs --out-dir dist --external @prisma/client",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
