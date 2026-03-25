@@ -11,10 +11,13 @@ import {
   User,
 } from '@autocut/shared';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API_URL =
+  typeof window !== 'undefined'
+    ? '/api/backend'
+    : (process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000') + '/api';
 
 export const api = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
