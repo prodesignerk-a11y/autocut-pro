@@ -46,7 +46,7 @@ export async function probeVideo(filePath: string): Promise<VideoProbeResult> {
         codec: videoStream.codec_name || 'unknown',
         width: videoStream.width || 0,
         height: videoStream.height || 0,
-        bitrate: parseInt(format.bit_rate as string) || 0,
+        bitrate: parseInt(String(format.bit_rate ?? 0)) || 0,
         fps,
         audioCodec: audioStream?.codec_name || null,
         format: format.format_name || 'unknown',
@@ -264,10 +264,9 @@ export async function trimAndConcat(
           reductionPercent: Math.max(0, reductionPercent),
         });
       })
-      .on('error', (err: Error, stdout: string, stderr: string) => {
+      .on('error', (err: Error) => {
         logger.error('FFmpeg trimAndConcat error', {
           error: err.message,
-          stderr,
         });
         reject(new Error(`FFmpeg processing failed: ${err.message}`));
       })
