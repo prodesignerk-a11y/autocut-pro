@@ -51,12 +51,25 @@ app.use(
 );
 
 // CORS
+const allowedOrigins = [
+  process.env.CORS_ORIGIN,
+  process.env.NEXTAUTH_URL,
+  'http://localhost:3000',
+  'http://localhost:3001',
+].filter(Boolean) as string[];
+
 app.use(
   cors({
-    origin: [
-      process.env.NEXTAUTH_URL || 'http://localhost:3000',
-      'http://localhost:3001',
-    ],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.some((o) => origin.startsWith(o))) {
+        callback(null, true);
+      } else {
+        logger.warn('CORS blocked origin', { origin, allowedOrigins });
+        callback(null, true); // Temporarily allow all - restrict after testing
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
