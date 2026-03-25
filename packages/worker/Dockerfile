@@ -34,13 +34,13 @@ COPY package.json pnpm-workspace.yaml ./
 COPY packages/worker/package.json ./packages/worker/
 COPY packages/shared/package.json ./packages/shared/
 COPY packages/database/package.json ./packages/database/
+COPY packages/database/prisma ./packages/database/prisma
 
 RUN pnpm install --no-frozen-lockfile --prod
+RUN pnpm --filter @autocut/database db:generate
 
 COPY --from=builder /app/packages/worker/dist ./packages/worker/dist
 COPY --from=builder /app/packages/shared/src ./packages/shared/src
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/packages/database/prisma ./packages/database/prisma
 
 # Create temp directory
 RUN mkdir -p /tmp/autocut
