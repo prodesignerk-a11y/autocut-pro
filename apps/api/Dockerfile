@@ -17,7 +17,8 @@ COPY packages/database ./packages/database
 COPY apps/api ./apps/api
 
 RUN pnpm --filter @autocut/database db:generate
-RUN pnpm add -D tsup --filter @autocut/api
+RUN pnpm add -D tsup --filter @autocut/shared --filter @autocut/api
+RUN pnpm --filter @autocut/shared build
 RUN pnpm --filter @autocut/api build
 
 # Stage 2: Production
@@ -37,7 +38,7 @@ RUN pnpm install --no-frozen-lockfile
 RUN pnpm --filter @autocut/database db:generate
 
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
-COPY --from=builder /app/packages/shared/src ./packages/shared/src
+COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
 
 ENV NODE_ENV=production
 ENV PORT=4000
