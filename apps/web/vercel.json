@@ -1,5 +1,0 @@
-{
-  "framework": "nextjs",
-  "installCommand": "npx pnpm@9.15.4 install",
-  "buildCommand": "npx pnpm@9.15.4 --filter @autocut/shared build && npx pnpm@9.15.4 --filter autocut_web run build"
-}
