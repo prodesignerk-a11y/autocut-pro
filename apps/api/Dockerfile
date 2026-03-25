@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node:20-alpine AS builder
+FROM node:20-slim AS builder
 
 RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
@@ -23,7 +23,12 @@ RUN pnpm --filter @autocut/database build
 RUN pnpm --filter @autocut/api build
 
 # Stage 2: Production
-FROM node:20-alpine AS runner
+FROM node:20-slim AS runner
+
+RUN apt-get update && apt-get install -y \
+    openssl \
+    ca-certificates \
+    --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 

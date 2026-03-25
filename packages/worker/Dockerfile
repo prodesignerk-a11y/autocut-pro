@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node:20-alpine AS builder
+FROM node:20-slim AS builder
 
 RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
@@ -23,10 +23,14 @@ RUN pnpm --filter @autocut/database build
 RUN pnpm --filter @autocut/worker build
 
 # Stage 2: Production
-FROM node:20-alpine AS runner
+FROM node:20-slim AS runner
 
-# Install FFmpeg
-RUN apk add --no-cache ffmpeg ca-certificates
+# Install FFmpeg + OpenSSL
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    openssl \
+    ca-certificates \
+    --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
@@ -45,7 +49,6 @@ COPY --from=builder /app/packages/worker/dist ./packages/worker/dist
 COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
 COPY --from=builder /app/packages/database/dist ./packages/database/dist
 
-# Create temp directory
 RUN mkdir -p /tmp/autocut
 
 ENV NODE_ENV=production
