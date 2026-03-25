@@ -11,6 +11,10 @@
     "db:migrate": "pnpm --filter database db:migrate",
     "db:studio": "pnpm --filter database db:studio"
   },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
   "devDependencies": {
     "turbo": "^2.0.0",
     "typescript": "^5.4.0"

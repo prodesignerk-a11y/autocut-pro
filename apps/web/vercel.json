@@ -1,0 +1,5 @@
+{
+  "installCommand": "cd ../.. && pnpm install --filter autocut_web...",
+  "buildCommand": "cd ../.. && pnpm --filter autocut_web build",
+  "framework": "nextjs"
+}
