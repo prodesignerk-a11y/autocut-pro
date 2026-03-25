@@ -1,8 +1,10 @@
 {
   "name": "@autocut/database",
   "version": "1.0.0",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
+    "build": "tsup src/index.ts --format cjs --dts --out-dir dist --external @prisma/client",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -13,6 +15,7 @@
   },
   "devDependencies": {
     "prisma": "^5.14.0",
+    "tsup": "^8.1.0",
     "typescript": "^5.4.0"
   }
 }

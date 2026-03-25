@@ -17,8 +17,9 @@ COPY packages/database ./packages/database
 COPY packages/worker ./packages/worker
 
 RUN pnpm --filter @autocut/database db:generate
-RUN pnpm add -D tsup --filter @autocut/shared --filter @autocut/worker
+RUN pnpm add -D tsup --filter @autocut/shared --filter @autocut/database --filter @autocut/worker
 RUN pnpm --filter @autocut/shared build
+RUN pnpm --filter @autocut/database build
 RUN pnpm --filter @autocut/worker build
 
 # Stage 2: Production
@@ -42,6 +43,7 @@ RUN pnpm --filter @autocut/database db:generate
 
 COPY --from=builder /app/packages/worker/dist ./packages/worker/dist
 COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
+COPY --from=builder /app/packages/database/dist ./packages/database/dist
 
 # Create temp directory
 RUN mkdir -p /tmp/autocut
