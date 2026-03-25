@@ -1,7 +1,7 @@
 # Stage 1: Build
 FROM node:20-alpine AS builder
 
-RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
 WORKDIR /app
 
@@ -28,7 +28,7 @@ FROM node:20-alpine AS runner
 # Install FFmpeg
 RUN apk add --no-cache ffmpeg ca-certificates
 
-RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
 WORKDIR /app
 

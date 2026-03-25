@@ -1,7 +1,7 @@
 # Stage 1: Build
 FROM node:20-alpine AS builder
 
-RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
 WORKDIR /app
 
@@ -25,7 +25,7 @@ RUN pnpm --filter @autocut/api build
 # Stage 2: Production
 FROM node:20-alpine AS runner
 
-RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
 WORKDIR /app
 

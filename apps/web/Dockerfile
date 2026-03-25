@@ -1,7 +1,7 @@
 # Stage 1: Build
 FROM node:20-alpine AS builder
 
-RUN npm install -g pnpm@9.0.0
+RUN npm install -g pnpm@9.15.4
 
 WORKDIR /app
 
@@ -21,7 +21,7 @@ RUN pnpm --filter @autocut/web build
 # Stage 2: Production
 FROM node:20-alpine AS runner
 
-RUN npm install -g pnpm@9.0.0
+RUN npm install -g pnpm@9.15.4
 
 WORKDIR /app
 
