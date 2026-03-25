@@ -1,3 +1,5 @@
 {
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "installCommand": "npx pnpm@9.15.4 install --filter autocut_web...",
+  "buildCommand": "npx pnpm@9.15.4 --filter autocut_web run build"
 }
