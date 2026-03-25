@@ -17,6 +17,7 @@ COPY packages/database ./packages/database
 COPY packages/worker ./packages/worker
 
 RUN pnpm --filter @autocut/database db:generate
+RUN pnpm add -D tsup --filter @autocut/worker
 RUN pnpm --filter @autocut/worker build
 
 # Stage 2: Production

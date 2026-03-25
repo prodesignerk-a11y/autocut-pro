@@ -22,6 +22,7 @@ COPY apps/api ./apps/api
 RUN pnpm --filter @autocut/database db:generate
 
 # Build
+RUN pnpm add -D tsup --filter @autocut/api
 RUN pnpm --filter @autocut/api build
 
 # Stage 2: Production
