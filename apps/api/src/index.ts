@@ -13,11 +13,14 @@ async function bootstrap() {
     logger.info('Database connected');
 
     // Ensure ADMIN_EMAIL user has admin role
-    if (process.env.ADMIN_EMAIL) {
-      await prisma.user.updateMany({
-        where: { email: process.env.ADMIN_EMAIL, role: { not: 'admin' } },
+    const adminEmail = process.env.ADMIN_EMAIL?.trim();
+    logger.info('Admin email config', { adminEmail, length: adminEmail?.length });
+    if (adminEmail) {
+      const updated = await prisma.user.updateMany({
+        where: { email: adminEmail, role: { not: 'admin' } },
         data: { role: 'admin' },
       });
+      logger.info('Admin promotion result', { count: updated.count });
     }
 
     // Start server
