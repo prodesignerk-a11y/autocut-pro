@@ -15,6 +15,7 @@ import uploadsRoutes from './routes/uploads';
 import adminRoutes from './routes/admin';
 
 const app: Application = express();
+app.set('trust proxy', 1);
 const httpServer = createServer(app);
 
 // WebSocket server

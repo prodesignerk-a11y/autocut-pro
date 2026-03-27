@@ -48,8 +48,7 @@ COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
 COPY --from=builder /app/packages/database/dist ./packages/database/dist
 
 ENV NODE_ENV=production
-ENV PORT=4000
 
-EXPOSE 4000
+EXPOSE 8080
 
-CMD ["node", "apps/api/dist/index.js"]
+CMD ["sh", "-c", "pnpm --filter @autocut/database db:push --accept-data-loss && node apps/api/dist/index.js"]
