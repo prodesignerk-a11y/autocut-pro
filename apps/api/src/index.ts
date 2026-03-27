@@ -12,6 +12,14 @@ async function bootstrap() {
     await prisma.$connect();
     logger.info('Database connected');
 
+    // Ensure ADMIN_EMAIL user has admin role
+    if (process.env.ADMIN_EMAIL) {
+      await prisma.user.updateMany({
+        where: { email: process.env.ADMIN_EMAIL, role: { not: 'admin' } },
+        data: { role: 'admin' },
+      });
+    }
+
     // Start server
     const server = httpServer.listen(PORT, () => {
       logger.info(`AutoCut Pro API running on port ${PORT}`, {
