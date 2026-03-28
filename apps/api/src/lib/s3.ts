@@ -35,13 +35,12 @@ export const s3 = {
   async getSignedUploadUrl(
     key: string,
     contentType: string,
-    sizeBytes: number
+    _sizeBytes: number
   ): Promise<string> {
     const command = new PutObjectCommand({
       Bucket: BUCKET,
       Key: key,
       ContentType: contentType,
-      ContentLength: sizeBytes,
     });
 
     const url = await getSignedUrl(s3Client, command, {
